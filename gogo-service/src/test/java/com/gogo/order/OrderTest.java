@@ -3,6 +3,7 @@ package com.gogo.order;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.gogo.base.core.CoreServerApp;
+import com.gogo.base.utils.JsonUtil;
 import com.gogo.schema.Tables;
-import com.gogo.schema.tables.BbOrder;
 import com.gogo.schema.tables.records.BbOrderRecord;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -24,12 +25,21 @@ public class OrderTest {
 	private DSLContext dsl;
 	
 	@Test
-	public void listByCd() {
+	@Ignore
+	public void test1() {
 		Result<BbOrderRecord> result = dsl.selectFrom(Tables.BB_ORDER).fetch();
 		result.map(r -> {
-			System.out.println(r.get("order_no"));
+			System.out.println(r.getOrderNo());
 			return r;
 		});
-		
+	}
+	
+	@Test
+	public void test2() {
+		Result<BbOrderRecord> result = dsl.selectFrom(Tables.BB_ORDER).fetch();
+		result.map(r -> {
+			System.out.println(JsonUtil.toJsonString(r));
+			return r;
+		});
 	}
 }
